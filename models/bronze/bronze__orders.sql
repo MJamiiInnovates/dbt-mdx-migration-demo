@@ -1,4 +1,9 @@
-{{ config(materialized='incremental', unique_key='order_id', file_format='delta') }}
+{{ config(
+    materialized='incremental',
+    incremental_strategy='merge',
+    unique_key='order_id',
+    file_format='delta'
+) }}
 with raw as ( select * from {{ ref('orders') }} )
 select
   cast(order_id as int) as order_id,
